@@ -84,7 +84,7 @@ def main():
     print(" 1. СБОРКА GOBOSCRIPT -> green_patrol_optimized.sb3")
     print("=" * 60)
     t0 = time.time()
-    res = subprocess.run(["goboscript", "build"], cwd=SCRIPT_DIR, capture_output=True, text=True)
+    res = subprocess.run(["goboscript", "build", "-o", FINAL_SB3], cwd=SCRIPT_DIR, capture_output=True, text=True)
     if res.returncode != 0:
         print("[ОШИБКА КОМПИЛЯЦИИ]:")
         print(res.stdout)
@@ -95,7 +95,7 @@ def main():
     print(f"[+] Компиляция завершена за {dt:.2f} сек.")
 
     # Удаляем устаревшие файлы .sb3, чтобы остался строго ОДИН проект
-    for old_name in ["green_patrol_opt.sb3", "task_final_opt.sb3", "zeleny_patrul_opt.sb3"]:
+    for old_name in ["green_patrol_opt.sb3", "task_final_opt.sb3", "zeleny_patrul_opt.sb3", "green-patrol.sb3"]:
         old_path = os.path.join(SCRIPT_DIR, old_name)
         if os.path.exists(old_path):
             try:
