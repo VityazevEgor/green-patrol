@@ -1,0 +1,7 @@
+[package]
+name = "green_patrol_optimized"
+version = "1.0.0"
+authors = ["Eco Team"]
+
+[stage]
+dimensions = [480, 360]

@@ -1,0 +1,35 @@
+name: Build Game
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install goboscript
+        run: |
+          curl -sSL https://github.com/aspizu/goboscript/releases/download/v3.2.1/goboscript_Linux_x86_64.tar.gz | tar -xz -C /usr/local/bin/
+          chmod +x /usr/local/bin/goboscript
+          goboscript --version
+
+      - name: Build Scratch Game
+        run: python build.py
+
+      - name: Upload Scratch Project (.sb3)
+        uses: actions/upload-artifact@v4
+        with:
+          name: green_patrol_optimized
+          path: green_patrol_optimized.sb3
