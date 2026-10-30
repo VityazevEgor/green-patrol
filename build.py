@@ -77,6 +77,13 @@ VARIABLE_NOTES = {
         "📌 ПЕРЕМЕННЫЕ СПРАЙТА «ЦИФРА ЕДИНИЦ»:\n\n"
         "• units — цифра разряда единиц текущего счета: score % 10."
     ),
+    "grid": (
+        "📌 ПЕРЕМЕННЫЕ СПРАЙТА «ИГРОВОЕ ПОЛЕ»:\n\n"
+        "• grid_x — координата X при процедурном рисовании клетки (от -230 до +230).\n"
+        "• grid_y — координата Y при процедурном рисовании клетки (от +170 до -170).\n"
+        "• grid_row — текущий номер строки сетки (0..17).\n"
+        "• grid_col — текущий номер колонки сетки (0..23)."
+    ),
 }
 
 def main():
@@ -112,6 +119,12 @@ def main():
     with zipfile.ZipFile(FINAL_SB3, "r") as zin:
         project_json = json.loads(zin.read("project.json").decode("utf-8"))
         
+        # Гарантируем регистрацию расширения 'pen' для совместимости со Scratch Desktop
+        if "extensions" not in project_json or not isinstance(project_json["extensions"], list):
+            project_json["extensions"] = []
+        if "pen" not in project_json["extensions"]:
+            project_json["extensions"].append("pen")
+
         # Добавляем заметки к каждому спрайту и сцене
         added_count = 0
         for target in project_json.get("targets", []):

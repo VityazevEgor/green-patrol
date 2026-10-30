@@ -66,8 +66,8 @@ nowarp proc init_history {
     add head_y to hist_y;
     init_i = 1;
     until init_i > 5 {
-        add (0 - (init_i * dir_x * 20)) to hist_x;
-        add (0 - (init_i * dir_y * 20)) to hist_y;
+        add (head_x - (init_i * dir_x * 20)) to hist_x;
+        add (head_y - (init_i * dir_y * 20)) to hist_y;
         init_i = init_i + 1;
     }
 }
@@ -86,10 +86,10 @@ nowarp proc calculate_next_position {
     new_head_x = head_x + dir_x * 20;
     new_head_y = head_y + dir_y * 20;
     
-    if new_head_x > 220 { new_head_x = -220; }
-    if new_head_x < -220 { new_head_x = 220; }
-    if new_head_y > 160 { new_head_y = -160; }
-    if new_head_y < -160 { new_head_y = 160; }
+    if new_head_x > 230 { new_head_x = -230; }
+    if new_head_x < -230 { new_head_x = 230; }
+    if new_head_y > 170 { new_head_y = -170; }
+    if new_head_y < -170 { new_head_y = 170; }
 }
 
 # 5. Проверка столкновения со своим хвостом (начиная со 2-го звена)
@@ -168,8 +168,8 @@ on "begin_play" {
     is_dead = "нет";
     last_eat_x = 9999;
     last_eat_y = 9999;
-    head_x = 0;
-    head_y = 0;
+    head_x = 10;
+    head_y = 10;
     goto head_x, head_y;
     set_ghost_effect 0;
     show;

@@ -16,8 +16,8 @@ on "spawn_food" {
         if food_type == 2 { switch_costume "trash_2"; }
         if food_type == 3 { switch_costume "trash_3"; }
         
-        fx = random(-10, 10) * 20;
-        fy = random(-7, 7) * 20;
+        fx = (random(-12, 11) * 20) + 10;
+        fy = (random(-9, 8) * 20) + 10;
         goto fx, fy;
         show;
     }

@@ -9,8 +9,8 @@ onflag {
 
 on "spawn_bin" {
     if game_state == "игра" {
-        bx = random(-10, 10) * 20;
-        by = random(-7, 7) * 20;
+        bx = (random(-11, 10) * 20) + 10;
+        by = (random(-8, 7) * 20) + 10;
         goto bx, by;
         show;
     }
