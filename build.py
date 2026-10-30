@@ -1,18 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Build system for 'Green Patrol' (Оптимизированная версия с полной русификацией).
-1. Собирает проект через goboscript build -> green_patrol_optimized.sb3
-2. Русифицирует project.json:
-   - Названия всех спрайтов (targets)
-   - Названия всех глобальных и локальных переменных (variables)
-   - Названия всех списков (lists)
-   - Названия всех сообщений (broadcasts)
-   - Названия всех костюмов и фонов (costumes/backdrops)
-   - Названия всех пользовательских блоков/функций (custom procedures)
-   - Все ссылки в блоках (сенсоры касания, переключение костюмов, выбор переменных)
-3. Добавляет в project.json нативные блоки-заметки (Workspace Comments)
-4. Регистрирует расширение 'pen' для мгновенной совместимости со Scratch Desktop
-5. Оставляет строго ОДИН итоговый файл: green_patrol_optimized.sb3
+Build system for 'Green Patrol'.
+Создаёт две версии проекта:
+1. green_patrol_optimized.sb3 — оригинальная версия, скомпилированная через goboscript без перевода.
+2. ru_green_patrol_optimized.sb3 — русифицированная версия с полным переводом всех переменных,
+   списков, сообщений, спрайтов, костюмов, функций и добавлением блоков-заметок (Workspace Comments).
 """
 
 import os
@@ -23,7 +15,8 @@ import json
 import time
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-FINAL_SB3 = os.path.join(SCRIPT_DIR, "green_patrol_optimized.sb3")
+ORIGINAL_SB3 = os.path.join(SCRIPT_DIR, "green_patrol_optimized.sb3")
+RU_SB3 = os.path.join(SCRIPT_DIR, "ru_green_patrol_optimized.sb3")
 
 if hasattr(sys.stdout, "reconfigure"):
     try:
@@ -304,22 +297,45 @@ def localize_project(project_json):
 
     return project_json
 
+def ensure_pen_extension(sb3_path):
+    """Гарантирует регистрацию расширения 'pen' для совместимости со Scratch Desktop."""
+    temp_sb3 = sb3_path + ".tmp_pen"
+    needs_update = False
+    with zipfile.ZipFile(sb3_path, "r") as zin:
+        project_json = json.loads(zin.read("project.json").decode("utf-8"))
+        if "extensions" not in project_json or not isinstance(project_json["extensions"], list):
+            project_json["extensions"] = []
+        if "pen" not in project_json["extensions"]:
+            project_json["extensions"].append("pen")
+            needs_update = True
+            with zipfile.ZipFile(temp_sb3, "w", zipfile.ZIP_DEFLATED) as zout:
+                for item in zin.infolist():
+                    if item.filename == "project.json":
+                        zout.writestr("project.json", json.dumps(project_json, ensure_ascii=False, indent=2))
+                    else:
+                        zout.writestr(item, zin.read(item.filename))
+    if needs_update:
+        os.replace(temp_sb3, sb3_path)
+
 def main():
     print("=" * 60)
     print(" 1. СБОРКА GOBOSCRIPT -> green_patrol_optimized.sb3")
     print("=" * 60)
     t0 = time.time()
-    res = subprocess.run(["goboscript", "build", "-o", FINAL_SB3], cwd=SCRIPT_DIR, capture_output=True, text=True)
+    res = subprocess.run(["goboscript", "build", "-o", ORIGINAL_SB3], cwd=SCRIPT_DIR, capture_output=True, text=True)
     if res.returncode != 0:
         print("[ОШИБКА КОМПИЛЯЦИИ]:")
         print(res.stdout)
         print(res.stderr)
         sys.exit(1)
     
+    # Регистрация pen для Scratch Desktop в оригинальном проекте
+    ensure_pen_extension(ORIGINAL_SB3)
     dt = time.time() - t0
-    print(f"[+] Компиляция завершена за {dt:.2f} сек.")
+    orig_kb = os.path.getsize(ORIGINAL_SB3) / 1024
+    print(f"[+] Оригинальный проект собран: green_patrol_optimized.sb3 ({orig_kb:.1f} КБ) за {dt:.2f} сек.")
 
-    # Удаляем устаревшие файлы .sb3, чтобы остался строго ОДИН проект
+    # Удаляем устаревшие файлы .sb3
     for old_name in ["green_patrol_opt.sb3", "task_final_opt.sb3", "zeleny_patrul_opt.sb3", "green-patrol.sb3", "test_ru.sb3"]:
         old_path = os.path.join(SCRIPT_DIR, old_name)
         if os.path.exists(old_path):
@@ -329,15 +345,15 @@ def main():
                 pass
 
     print("\n" + "=" * 60)
-    print(" 2. РУСИФИКАЦИЯ ЭЛЕМЕНТОВ И ДОБАВЛЕНИЕ БЛОКОВ-ЗАМЕТОК")
+    print(" 2. РУСИФИКАЦИЯ ЭЛЕМЕНТОВ -> ru_green_patrol_optimized.sb3")
     print("=" * 60)
 
     temp_sb3 = os.path.join(SCRIPT_DIR, "temp_build.sb3")
     
-    with zipfile.ZipFile(FINAL_SB3, "r") as zin:
+    with zipfile.ZipFile(ORIGINAL_SB3, "r") as zin:
         project_json = json.loads(zin.read("project.json").decode("utf-8"))
-        
-        # Гарантируем регистрацию расширения 'pen' для совместимости со Scratch Desktop
+
+        # Гарантируем регистрацию pen
         if "extensions" not in project_json or not isinstance(project_json["extensions"], list):
             project_json["extensions"] = []
         if "pen" not in project_json["extensions"]:
@@ -368,7 +384,7 @@ def main():
                 added_count += 1
                 print(f"[+] Заметка добавлена в спрайт: {t_name}")
 
-        # Перепаковываем архив с обновленным project.json
+        # Сохраняем русскоязычную версию
         with zipfile.ZipFile(temp_sb3, "w", zipfile.ZIP_DEFLATED) as zout:
             for item in zin.infolist():
                 if item.filename == "project.json":
@@ -376,13 +392,13 @@ def main():
                 else:
                     zout.writestr(item, zin.read(item.filename))
 
-    os.replace(temp_sb3, FINAL_SB3)
-    size_kb = os.path.getsize(FINAL_SB3) / 1024
+    os.replace(temp_sb3, RU_SB3)
+    ru_kb = os.path.getsize(RU_SB3) / 1024
 
     print("\n" + "=" * 60)
-    print(f" [УСПЕХ] Создан единый проект игры: green_patrol_optimized.sb3")
-    print(f" Размер файла: {size_kb:.1f} КБ")
-    print(f" Всего добавлено блоков-заметок: {added_count}")
+    print(" [УСПЕХ] Собраны две версии игры:")
+    print(f" 1. Оригинал (goboscript):       green_patrol_optimized.sb3    ({orig_kb:.1f} КБ)")
+    print(f" 2. Русифицированная (с заметками): ru_green_patrol_optimized.sb3 ({ru_kb:.1f} КБ)")
     print("=" * 60)
 
 if __name__ == "__main__":

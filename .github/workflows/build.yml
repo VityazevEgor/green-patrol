@@ -26,8 +26,10 @@ jobs:
       - name: Build Scratch Game
         run: python build.py
 
-      - name: Upload Scratch Project (.sb3)
+      - name: Upload Scratch Projects (.sb3)
         uses: actions/upload-artifact@v4
         with:
-          name: green_patrol_optimized
-          path: green_patrol_optimized.sb3
+          name: green_patrol_builds
+          path: |
+            green_patrol_optimized.sb3
+            ru_green_patrol_optimized.sb3
