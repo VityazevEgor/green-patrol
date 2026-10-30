@@ -9,8 +9,6 @@ costumes "assets/costumes/digit_0.svg",
          "assets/costumes/digit_8.svg",
          "assets/costumes/digit_9.svg";
 
-var units = 0;
-
 onflag { hide; }
 
 on "begin_play" {
@@ -18,8 +16,7 @@ on "begin_play" {
     set_size 100;
     show;
     until game_state != "игра" {
-        units = score % 10;
-        switch_costume units + 1;
+        switch_costume (score % 10 + 1);
         wait 0.1;
     }
 }
@@ -27,8 +24,7 @@ on "begin_play" {
 on "game_over" {
     goto 12, -38;
     set_size 125;
-    units = score % 10;
-    switch_costume units + 1;
+    switch_costume (score % 10 + 1);
     show;
 }
 
