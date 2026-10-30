@@ -205,13 +205,27 @@ def localize_project(project_json):
             target["name"] = SPRITE_NAMES[old_name]
 
     # 2. Переименование переменных и списков в заголовках
+    # В Scratch 3 для корректной работы имя и ID переменной/списка должны совпадать
     for target in project_json.get("targets", []):
-        for var_id, var_info in target.get("variables", {}).items():
-            if var_info[0] in VAR_NAMES:
-                var_info[0] = VAR_NAMES[var_info[0]]
-        for list_id, list_info in target.get("lists", {}).items():
-            if list_info[0] in VAR_NAMES:
-                list_info[0] = VAR_NAMES[list_info[0]]
+        if "variables" in target and isinstance(target["variables"], dict):
+            new_variables = {}
+            for var_id, var_info in target["variables"].items():
+                old_name = var_info[0]
+                new_name = VAR_NAMES.get(old_name, VAR_NAMES.get(var_id, old_name))
+                new_id = VAR_NAMES.get(var_id, new_name)
+                new_info = [new_name] + var_info[1:]
+                new_variables[new_id] = new_info
+            target["variables"] = new_variables
+
+        if "lists" in target and isinstance(target["lists"], dict):
+            new_lists = {}
+            for list_id, list_info in target["lists"].items():
+                old_name = list_info[0]
+                new_name = VAR_NAMES.get(old_name, VAR_NAMES.get(list_id, old_name))
+                new_id = VAR_NAMES.get(list_id, new_name)
+                new_info = [new_name] + list_info[1:]
+                new_lists[new_id] = new_info
+            target["lists"] = new_lists
 
     # 3. Переименование сообщений (broadcasts) во всех целях (включая Сцену)
     # В Scratch 3 для корректной работы имя и ID сообщения должны совпадать
@@ -250,10 +264,16 @@ def localize_project(project_json):
             for f_key, f_val in fields.items():
                 if isinstance(f_val, list) and len(f_val) >= 1:
                     val_name = f_val[0]
-                    if f_key == "VARIABLE" and val_name in VAR_NAMES:
-                        f_val[0] = VAR_NAMES[val_name]
-                    elif f_key == "LIST" and val_name in VAR_NAMES:
-                        f_val[0] = VAR_NAMES[val_name]
+                    if f_key == "VARIABLE":
+                        if val_name in VAR_NAMES:
+                            f_val[0] = VAR_NAMES[val_name]
+                        if len(f_val) > 1 and f_val[1] in VAR_NAMES:
+                            f_val[1] = VAR_NAMES[f_val[1]]
+                    elif f_key == "LIST":
+                        if val_name in VAR_NAMES:
+                            f_val[0] = VAR_NAMES[val_name]
+                        if len(f_val) > 1 and f_val[1] in VAR_NAMES:
+                            f_val[1] = VAR_NAMES[f_val[1]]
                     elif f_key == "BROADCAST_OPTION":
                         if val_name in BROADCAST_NAMES:
                             f_val[0] = BROADCAST_NAMES[val_name]
@@ -267,15 +287,20 @@ def localize_project(project_json):
             # Входы блоков (inputs)
             inputs = block.get("inputs", {})
             for iname, ival in inputs.items():
-                if isinstance(ival, list) and len(ival) >= 2 and isinstance(ival[1], list):
-                    item = ival[1]
-                    if len(item) >= 2 and item[0] in (12, 13) and item[1] in VAR_NAMES:
-                        item[1] = VAR_NAMES[item[1]]
-                    if len(item) >= 2 and item[0] == 11:
-                        if item[1] in BROADCAST_NAMES:
-                            item[1] = BROADCAST_NAMES[item[1]]
-                        if len(item) >= 3 and item[2] in BROADCAST_NAMES:
-                            item[2] = BROADCAST_NAMES[item[2]]
+                if isinstance(ival, list):
+                    for sub_idx in (1, 2):
+                        if len(ival) > sub_idx and isinstance(ival[sub_idx], list):
+                            sub_item = ival[sub_idx]
+                            if len(sub_item) >= 2 and sub_item[0] in (12, 13):
+                                if sub_item[1] in VAR_NAMES:
+                                    sub_item[1] = VAR_NAMES[sub_item[1]]
+                                if len(sub_item) >= 3 and sub_item[2] in VAR_NAMES:
+                                    sub_item[2] = VAR_NAMES[sub_item[2]]
+                            if len(sub_item) >= 2 and sub_item[0] == 11:
+                                if sub_item[1] in BROADCAST_NAMES:
+                                    sub_item[1] = BROADCAST_NAMES[sub_item[1]]
+                                if len(sub_item) >= 3 and sub_item[2] in BROADCAST_NAMES:
+                                    sub_item[2] = BROADCAST_NAMES[sub_item[2]]
 
     return project_json
 
