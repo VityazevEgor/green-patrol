@@ -4,6 +4,8 @@ stages:
 build_game:
   stage: build
   image: python:3.11-slim
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
   before_script:
     - apt-get update && apt-get install -y curl tar
     - curl -sSL https://github.com/aspizu/goboscript/releases/download/v3.2.1/goboscript_Linux_x86_64.tar.gz | tar -xz -C /usr/local/bin/
