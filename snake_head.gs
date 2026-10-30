@@ -69,6 +69,9 @@ proc check_self_collision {
     chk_idx = 2;
     repeat snake_len {
         if chk_idx <= length hist_x and hist_x[chk_idx] == head_x and hist_y[chk_idx] == head_y {
+            goto hist_x[1], hist_y[1];
+            head_x = hist_x[1];
+            head_y = hist_y[1];
             handle_death;
         }
         chk_idx += 1;
