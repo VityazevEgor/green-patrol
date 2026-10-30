@@ -20,6 +20,7 @@ var head_y = 0;
 var food_type = 1;
 var last_eat_x = 9999;
 var last_eat_y = 9999;
+var cell_size = 20;
 
 # Глобальные списки истории координат
 list hist_x = [];
