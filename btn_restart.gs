@@ -12,7 +12,7 @@ on "game_over" {
 onclick {
     start_sound "btn_restart";
     set_size 92;
-    wait 0.08;
+    wait 0.28;
     set_size 100;
     broadcast "start_game";
 }

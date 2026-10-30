@@ -18,7 +18,7 @@ on "begin_play" {
     set_size 100;
     show;
     until game_state != "игра" {
-        tens = (score / 10) % 10;
+        tens = (score - (score % 10)) / 10;
         switch_costume tens + 1;
         wait 0.1;
     }
@@ -27,7 +27,7 @@ on "begin_play" {
 on "game_over" {
     goto -12, -38;
     set_size 125;
-    tens = (score / 10) % 10;
+    tens = (score - (score % 10)) / 10;
     switch_costume tens + 1;
     show;
 }

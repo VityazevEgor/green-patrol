@@ -48,9 +48,10 @@ cover_svg = f"""<svg width="480" height="360" viewBox="0 0 480 360" xmlns="http:
   {text_path("ЗЕЛЕНЫЙ ПАТРУЛЬ", 240, 75, 26, fill="#74c69d", align="middle", bold=True)}
   {text_path("Миссия юных экологов по спасению леса", 240, 102, 13, fill="#d8f3dc", align="middle", bold=False)}
   
-  {text_path("Название команды (участники): Скрэтчерионы", 240, 238, 14, fill="#ffffff", align="middle", bold=True)}
-  {text_path("Школа №1558", 240, 266, 14, fill="#95d5b2", align="middle", bold=True)}
-  {text_path("Нажмите Зеленый флаг для старта проекта", 240, 305, 12, fill="#ffd166", align="middle", bold=True)}
+  {text_path("Команда: Скрэтчерионы", 240, 228, 14, fill="#ffffff", align="middle", bold=True)}
+  {text_path("Иванушкин Дмитрий Яковлевич · Витезева Ева Денисовна", 240, 252, 11, fill="#ffffff", align="middle", bold=False)}
+  {text_path("Школа №1558", 240, 274, 13, fill="#95d5b2", align="middle", bold=True)}
+  {text_path("Нажмите Зеленый флаг для старта проекта", 240, 306, 12, fill="#ffd166", align="middle", bold=True)}
 </svg>"""
 with open(os.path.join(BD_DIR, "cover.svg"), "w", encoding="utf-8") as f:
     f.write(cover_svg)
@@ -95,11 +96,11 @@ settings_svg = f"""<svg width="480" height="360" viewBox="0 0 480 360" xmlns="ht
   
   {text_path("ПРАВИЛА ИГРЫ", 240, 50, 22, fill="#74c69d", align="middle", bold=True)}
   
-  {text_path("1. Главная цель: собрать 50 ед. мусора и спасти лес", 40, 90, 13, fill="#ffffff", align="start", bold=False)}
+  {text_path("1. Главная цель: набрать 50 баллов и спасти лес", 40, 90, 13, fill="#ffffff", align="start", bold=False)}
   {text_path("2. Управление змейкой: клавиши Стрелки (Вверх, Вниз, Влево, Вправо)", 40, 120, 13, fill="#ffffff", align="start", bold=False)}
   {text_path("3. Мусор 1 (банка): +1 балл, рост хвоста на 1 сегмент", 40, 150, 13, fill="#a7c957", align="start", bold=False)}
-  {text_path("4. Мусор 2 (бутылка): +2 балла, рост хвоста на 2 сегмента", 40, 180, 13, fill="#38b000", align="start", bold=False)}
-  {text_path("5. Мусор 3 (батарейка): +3 балла, рост хвоста на 3 сегмента", 40, 210, 13, fill="#ffd166", align="start", bold=False)}
+  {text_path("4. Мусор 2 (бутылка): +2 балла, рост хвоста на 1 сегмент", 40, 180, 13, fill="#38b000", align="start", bold=False)}
+  {text_path("5. Мусор 3 (батарейка): +3 балла, рост хвоста на 1 сегмент", 40, 210, 13, fill="#ffd166", align="start", bold=False)}
   {text_path("6. Корзина: штраф -1 балл и уменьшение хвоста на 1 сегмент", 40, 240, 13, fill="#ff9f1c", align="start", bold=False)}
   {text_path("7. Поражение: столкновение змейки с собственным телом", 40, 270, 13, fill="#ff6b6b", align="start", bold=False)}
   {text_path("8. Для возврата в меню нажмите крестик в правом верхнем углу", 40, 305, 12, fill="#95d5b2", align="start", bold=True)}

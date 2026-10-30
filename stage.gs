@@ -4,7 +4,8 @@ costumes "assets/backdrops/cover.svg",
          "assets/backdrops/loading.svg",
          "assets/backdrops/game_20.svg",
          "assets/backdrops/win.svg",
-         "assets/backdrops/lose.svg";
+         "assets/backdrops/lose.svg",
+         "assets/backdrops/game_30.svg";
 
 sounds "assets/sounds/menu_music.wav",
        "assets/sounds/game_music.wav",
@@ -27,7 +28,7 @@ list hist_y = [];
 onflag {
     game_state = "заставка";
     switch_backdrop "cover";
-    wait 0.05;
+    wait 3;
     game_state = "меню";
     switch_backdrop "menu";
     broadcast "open_menu";
