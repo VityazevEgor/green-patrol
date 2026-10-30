@@ -213,11 +213,15 @@ def localize_project(project_json):
             if list_info[0] in VAR_NAMES:
                 list_info[0] = VAR_NAMES[list_info[0]]
 
-    # 3. Переименование сообщений (broadcasts) на Сцене
-    stage = [t for t in project_json.get("targets", []) if t.get("isStage")][0]
-    for bc_id, bc_name in list(stage.get("broadcasts", {}).items()):
-        if bc_name in BROADCAST_NAMES:
-            stage["broadcasts"][bc_id] = BROADCAST_NAMES[bc_name]
+    # 3. Переименование сообщений (broadcasts) во всех целях (включая Сцену)
+    # В Scratch 3 для корректной работы имя и ID сообщения должны совпадать
+    for target in project_json.get("targets", []):
+        if "broadcasts" in target and isinstance(target["broadcasts"], dict):
+            new_broadcasts = {}
+            for bc_id, bc_name in target["broadcasts"].items():
+                target_name = BROADCAST_NAMES.get(bc_name, BROADCAST_NAMES.get(bc_id, bc_name))
+                new_broadcasts[target_name] = target_name
+            target["broadcasts"] = new_broadcasts
 
     # 4. Переименование костюмов и фонов в target.costumes
     for target in project_json.get("targets", []):
@@ -250,8 +254,11 @@ def localize_project(project_json):
                         f_val[0] = VAR_NAMES[val_name]
                     elif f_key == "LIST" and val_name in VAR_NAMES:
                         f_val[0] = VAR_NAMES[val_name]
-                    elif f_key == "BROADCAST_OPTION" and val_name in BROADCAST_NAMES:
-                        f_val[0] = BROADCAST_NAMES[val_name]
+                    elif f_key == "BROADCAST_OPTION":
+                        if val_name in BROADCAST_NAMES:
+                            f_val[0] = BROADCAST_NAMES[val_name]
+                        if len(f_val) > 1 and f_val[1] in BROADCAST_NAMES:
+                            f_val[1] = BROADCAST_NAMES[f_val[1]]
                     elif f_key in ("COSTUME", "BACKDROP") and val_name in COSTUME_NAMES:
                         f_val[0] = COSTUME_NAMES[val_name]
                     elif f_key == "TOUCHINGOBJECTMENU" and val_name in SPRITE_NAMES:
@@ -264,8 +271,11 @@ def localize_project(project_json):
                     item = ival[1]
                     if len(item) >= 2 and item[0] in (12, 13) and item[1] in VAR_NAMES:
                         item[1] = VAR_NAMES[item[1]]
-                    if len(item) >= 2 and item[0] == 11 and item[1] in BROADCAST_NAMES:
-                        item[1] = BROADCAST_NAMES[item[1]]
+                    if len(item) >= 2 and item[0] == 11:
+                        if item[1] in BROADCAST_NAMES:
+                            item[1] = BROADCAST_NAMES[item[1]]
+                        if len(item) >= 3 and item[2] in BROADCAST_NAMES:
+                            item[2] = BROADCAST_NAMES[item[2]]
 
     return project_json
 
