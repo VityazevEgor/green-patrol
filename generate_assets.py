@@ -130,67 +130,18 @@ loading_svg = f"""<svg width="480" height="360" viewBox="0 0 480 360" xmlns="htt
 with open(os.path.join(BD_DIR, "loading.svg"), "w", encoding="utf-8") as f:
     f.write(loading_svg)
 
-# 5. GAME 20 PX (ПОЛНОЭКРАННАЯ ЧЁТКАЯ ШАХМАТНАЯ СЕТКА 23x17)
-# X: 23 колонки (20px), центры Scratch X = -220..+220 (шаг 20), центр ровно в X=0
-# Y: 17 строк (20px), центры Scratch Y = -160..+160 (шаг 20), центр ровно в Y=0
-grid_20_cells = []
-for c in range(23):
-    for r in range(17):
-        x = 10 + c * 20
-        y = 10 + r * 20
-        fill_col = "#2d6a4f" if (c + r) % 2 == 0 else "#357a5b"
-        grid_20_cells.append(f'<rect x="{x}" y="{y}" width="20" height="20" fill="{fill_col}" stroke="#235841" stroke-width="0.8"/>')
-
-game_20_svg = f"""<svg width="480" height="360" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
+# 5. GAME BACKDROP (Универсальный фон игры, сетка рисуется процедурно спрайтом grid)
+game_svg = """<svg width="480" height="360" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="g20_bg" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="g_bg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#143628"/>
       <stop offset="100%" stop-color="#0b2319"/>
     </linearGradient>
   </defs>
-  <rect width="480" height="360" fill="url(#g20_bg)"/>
-  
-  <rect x="8" y="8" width="464" height="344" rx="6" fill="#1b4332" stroke="#74c69d" stroke-width="2.5"/>
-  {"".join(grid_20_cells)}
+  <rect width="480" height="360" fill="url(#g_bg)"/>
 </svg>"""
-with open(os.path.join(BD_DIR, "game_20.svg"), "w", encoding="utf-8") as f:
-    f.write(game_20_svg)
-
-# 6. GAME 30 PX (ЧЁТКАЯ ШАХМАТНАЯ СЕТКА 30px)
-# X: 13 колонок (30px), центры клеток при Scratch X = -180..+180 (шаг 30), центр при X=0
-# Y: 9 строк (30px), центры клеток при Scratch Y = -120..+120 (шаг 30), центр при Y=0
-grid_30_cells = []
-for c in range(13):
-    for r in range(9):
-        x = 45 + c * 30
-        y = 45 + r * 30
-        fill_col = "#1b4332" if (c + r) % 2 == 0 else "#245842"
-        grid_30_cells.append(f'<rect x="{x}" y="{y}" width="30" height="30" fill="{fill_col}" stroke="#16392a" stroke-width="1"/>')
-
-game_30_svg = f"""<svg width="480" height="360" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="g30_bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0f291e"/>
-      <stop offset="100%" stop-color="#071912"/>
-    </linearGradient>
-  </defs>
-  <rect width="480" height="360" fill="url(#g30_bg)"/>
-  
-  <polygon points="0,45 35,120 0,200" fill="#081c15" opacity="0.6"/>
-  <polygon points="480,45 445,120 480,200" fill="#081c15" opacity="0.6"/>
-  <polygon points="0,200 35,280 0,340" fill="#081c15" opacity="0.6"/>
-  <polygon points="480,200 445,280 480,340" fill="#081c15" opacity="0.6"/>
-  
-  <!-- Grid Field Frame: 390x270 field with 2px padding -->
-  <rect x="43" y="43" width="394" height="274" rx="4" fill="#0d2119" stroke="#52b788" stroke-width="2.5"/>
-  {"".join(grid_30_cells)}
-  
-  <!-- Top HUD Banner -->
-  <rect x="0" y="0" width="480" height="42" fill="#081c15" fill-opacity="0.95" stroke="#52b788" stroke-width="1"/>
-  {text_path("ЗЕЛЕНЫЙ ПАТРУЛЬ (СЕТКА 30 PX)", 120, 26, 12, fill="#74c69d", align="middle", bold=True)}
-</svg>"""
-with open(os.path.join(BD_DIR, "game_30.svg"), "w", encoding="utf-8") as f:
-    f.write(game_30_svg)
+with open(os.path.join(BD_DIR, "game.svg"), "w", encoding="utf-8") as f:
+    f.write(game_svg)
 
 # 7. WIN
 win_svg = f"""<svg width="480" height="360" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
