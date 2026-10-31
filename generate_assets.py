@@ -94,16 +94,21 @@ settings_svg = f"""<svg width="480" height="360" viewBox="0 0 480 360" xmlns="ht
   <rect width="480" height="360" fill="url(#s_bg)"/>
   <rect x="20" y="15" width="440" height="330" rx="16" fill="#102d23" stroke="#52b788" stroke-width="2"/>
   
-  {text_path("ПРАВИЛА ИГРЫ", 240, 50, 22, fill="#74c69d", align="middle", bold=True)}
+  {text_path("ПРАВИЛА И НАСТРОЙКИ", 240, 48, 20, fill="#74c69d", align="middle", bold=True)}
   
-  {text_path("1. Главная цель: набрать 50 баллов и спасти лес", 40, 90, 13, fill="#ffffff", align="start", bold=False)}
-  {text_path("2. Управление змейкой: клавиши Стрелки (Вверх, Вниз, Влево, Вправо)", 40, 120, 13, fill="#ffffff", align="start", bold=False)}
-  {text_path("3. Мусор 1 (банка): +1 балл, рост хвоста на 1 сегмент", 40, 150, 13, fill="#a7c957", align="start", bold=False)}
-  {text_path("4. Мусор 2 (бутылка): +2 балла, рост хвоста на 1 сегмент", 40, 180, 13, fill="#38b000", align="start", bold=False)}
-  {text_path("5. Мусор 3 (батарейка): +3 балла, рост хвоста на 1 сегмент", 40, 210, 13, fill="#ffd166", align="start", bold=False)}
-  {text_path("6. Корзина: штраф -1 балл и уменьшение хвоста на 1 сегмент", 40, 240, 13, fill="#ff9f1c", align="start", bold=False)}
-  {text_path("7. Поражение: столкновение змейки с собственным телом", 40, 270, 13, fill="#ff6b6b", align="start", bold=False)}
-  {text_path("8. Для возврата в меню нажмите крестик в правом верхнем углу", 40, 305, 12, fill="#95d5b2", align="start", bold=True)}
+  {text_path("1. Главная цель: набрать 50 баллов и спасти лес", 40, 78, 12.5, fill="#ffffff", align="start", bold=False)}
+  {text_path("2. Управление змейкой: клавиши Стрелки (Вверх, Вниз, Влево, Вправо)", 40, 102, 12.5, fill="#ffffff", align="start", bold=False)}
+  {text_path("3. Мусор 1 (банка): +1 балл, рост хвоста на 1 сегмент", 40, 126, 12.5, fill="#a7c957", align="start", bold=False)}
+  {text_path("4. Мусор 2 (бутылка): +2 балла, рост хвоста на 1 сегмент", 40, 150, 12.5, fill="#38b000", align="start", bold=False)}
+  {text_path("5. Мусор 3 (батарейка): +3 балла, рост хвоста на 1 сегмент", 40, 174, 12.5, fill="#ffd166", align="start", bold=False)}
+  {text_path("6. Корзина: штраф -1 балл и уменьшение хвоста на 1 сегмент", 40, 198, 12.5, fill="#ff9f1c", align="start", bold=False)}
+  {text_path("7. Поражение: столкновение змейки с собственным телом", 40, 222, 12.5, fill="#ff6b6b", align="start", bold=False)}
+  {text_path("8. Для возврата в меню нажмите крестик в правом верхнем углу", 40, 246, 11.5, fill="#95d5b2", align="start", bold=True)}
+
+  <!-- Блок настройки сетки -->
+  <rect x="35" y="264" width="410" height="64" rx="12" fill="#081c15" fill-opacity="0.8" stroke="#2d6a4f" stroke-width="1.5"/>
+  {text_path("Размерность сетки поля:", 55, 292, 13, fill="#d8f3dc", align="start", bold=True)}
+  {text_path("20 px (24×18)  |  30 px (16×12)", 55, 312, 11, fill="#74c69d", align="start", bold=False)}
 </svg>"""
 with open(os.path.join(BD_DIR, "settings.svg"), "w", encoding="utf-8") as f:
     f.write(settings_svg)

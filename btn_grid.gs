@@ -5,7 +5,7 @@ sounds "assets/sounds/btn_settings.wav";
 onflag { hide; }
 
 on "open_settings" {
-    goto 120, -120;
+    goto 120, -116;
     set_size 90;
     if cell_size == 20 { switch_costume "grid_20"; }
     if cell_size == 30 { switch_costume "grid_30"; }
