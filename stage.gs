@@ -2,10 +2,9 @@ costumes "assets/backdrops/cover.svg",
          "assets/backdrops/menu.svg",
          "assets/backdrops/settings.svg",
          "assets/backdrops/loading.svg",
-         "assets/backdrops/game_20.svg",
+         "assets/backdrops/game.svg",
          "assets/backdrops/win.svg",
-         "assets/backdrops/lose.svg",
-         "assets/backdrops/game_30.svg";
+         "assets/backdrops/lose.svg";
 
 sounds "assets/sounds/menu_music.wav",
        "assets/sounds/game_music.wav",
@@ -20,6 +19,7 @@ var head_y = 0;
 var food_type = 1;
 var last_eat_x = 9999;
 var last_eat_y = 9999;
+var cell_size = 20;
 
 # Глобальные списки истории координат
 list hist_x = [];
@@ -59,7 +59,7 @@ on "start_game" {
     switch_backdrop "loading";
     stop_all_sounds;
     wait 0.8;
-    switch_backdrop "game_20";
+    switch_backdrop "game";
     game_state = "игра";
     broadcast "begin_play";
 }

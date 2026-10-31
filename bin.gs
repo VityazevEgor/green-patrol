@@ -6,7 +6,8 @@ onflag {
 
 on "spawn_bin" {
     if game_state == "игра" {
-        goto (random(-11, 10) * 20 + 10), (random(-8, 7) * 20 + 10);
+        set_size (cell_size * 5);
+        goto (random(1 - 240 / cell_size, 240 / cell_size - 2) * cell_size + cell_size / 2), (random(1 - 180 / cell_size, 180 / cell_size - 2) * cell_size + cell_size / 2);
         show;
     }
 }

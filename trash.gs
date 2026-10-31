@@ -10,7 +10,8 @@ on "spawn_food" {
     if game_state == "игра" {
         food_type = random(1, 3);
         switch_costume food_type;
-        goto (random(-12, 11) * 20 + 10), (random(-9, 8) * 20 + 10);
+        set_size (cell_size * 5);
+        goto (random(0 - 240 / cell_size, 240 / cell_size - 1) * cell_size + cell_size / 2), (random(0 - 180 / cell_size, 180 / cell_size - 1) * cell_size + cell_size / 2);
         show;
     }
 }

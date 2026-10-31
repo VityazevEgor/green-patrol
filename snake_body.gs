@@ -36,10 +36,10 @@ proc update_clone_segment {
             
             # Анимация проглатывания мусора
             if x_position() == last_eat_x and y_position() == last_eat_y {
-                set_size 125;
+                set_size (cell_size * 5 + 25);
             }
             if x_position() != last_eat_x or y_position() != last_eat_y {
-                set_size 100;
+                set_size (cell_size * 5);
             }
         }
     }

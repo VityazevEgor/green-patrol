@@ -43,22 +43,22 @@ proc init_history {
     add head_x to hist_x;
     add head_y to hist_y;
     repeat 5 {
-        add (hist_x[length hist_x] - 20) to hist_x;
+        add (hist_x[length hist_x] - cell_size) to hist_x;
         add head_y to hist_y;
     }
 }
 
 # 2. Шаг головы по направлению с точным смещением и заворот через край экрана
 proc step_head {
-    if dir == 90 { change_x 20; }
-    if dir == -90 { change_x -20; }
-    if dir == 0 { change_y 20; }
-    if dir == 180 { change_y -20; }
+    if dir == 90 { change_x cell_size; }
+    if dir == -90 { change_x (0 - cell_size); }
+    if dir == 0 { change_y cell_size; }
+    if dir == 180 { change_y (0 - cell_size); }
     
-    if x_position() > 230 { set_x -230; }
-    if x_position() < -230 { set_x 230; }
-    if y_position() > 170 { set_y -170; }
-    if y_position() < -170 { set_y 170; }
+    if x_position() > (240 - cell_size / 2) { set_x (-240 + cell_size / 2); }
+    if x_position() < (-240 + cell_size / 2) { set_x (240 - cell_size / 2); }
+    if y_position() > (180 - cell_size / 2) { set_y (-180 + cell_size / 2); }
+    if y_position() < (-180 + cell_size / 2) { set_y (180 - cell_size / 2); }
     
     head_x = x_position();
     head_y = y_position();
@@ -138,9 +138,10 @@ on "begin_play" {
     snake_len = 3;
     last_eat_x = 9999;
     last_eat_y = 9999;
-    head_x = 10;
-    head_y = 10;
+    head_x = cell_size / 2;
+    head_y = cell_size / 2;
     goto head_x, head_y;
+    set_size (cell_size * 5);
     set_ghost_effect 0;
     show;
     
