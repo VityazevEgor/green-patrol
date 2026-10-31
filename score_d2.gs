@@ -12,7 +12,7 @@ costumes "assets/costumes/digit_0.svg",
 onflag { hide; }
 
 on "begin_play" {
-    goto 212, 155;
+    goto 223, 161;
     set_size 100;
     show;
     until game_state != "игра" {

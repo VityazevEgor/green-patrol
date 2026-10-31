@@ -36,7 +36,6 @@ SPRITE_NAMES = {
     "grid": "Игровое поле",
     "score_d1": "Десятки счёта",
     "score_d2": "Единицы счёта",
-    "score_label": "Надпись Счёт",
     "btn_start": "Кнопка Старт",
     "btn_settings": "Кнопка Настройки",
     "btn_close": "Кнопка Закрыть",
@@ -129,7 +128,6 @@ COSTUME_NAMES = {
     "btn_settings": "Кнопка Настройки",
     "btn_close": "Кнопка Закрыть",
     "btn_restart": "Кнопка Заново",
-    "score_label": "Табличка Счёт",
     "grid_20": "Кнопка 20 px",
     "grid_30": "Кнопка 30 px",
     # Цифры

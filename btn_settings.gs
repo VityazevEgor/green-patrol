@@ -4,7 +4,7 @@ sounds "assets/sounds/btn_settings.wav";
 onflag { hide; }
 
 on "open_menu" {
-    goto 0, -45;
+    goto 0, -60;
     set_size 100;
     show;
 }

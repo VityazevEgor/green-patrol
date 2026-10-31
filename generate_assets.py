@@ -48,7 +48,7 @@ cover_svg = f"""<svg width="480" height="360" viewBox="0 0 480 360" xmlns="http:
   {text_path("ЗЕЛЕНЫЙ ПАТРУЛЬ", 240, 75, 26, fill="#74c69d", align="middle", bold=True)}
   {text_path("Миссия юных экологов по спасению леса", 240, 102, 13, fill="#d8f3dc", align="middle", bold=False)}
   
-  {text_path("Команда: Скрэтчерионы", 240, 228, 14, fill="#ffffff", align="middle", bold=True)}
+  {text_path("Команда: Скретчерионы", 240, 228, 14, fill="#ffffff", align="middle", bold=True)}
   {text_path("Иванушкин Дмитрий Яковлевич · Витезева Ева Денисовна", 240, 252, 11, fill="#ffffff", align="middle", bold=False)}
   {text_path("Школа №1558", 240, 274, 13, fill="#95d5b2", align="middle", bold=True)}
   {text_path("Нажмите Зеленый флаг для старта проекта", 240, 306, 12, fill="#ffd166", align="middle", bold=True)}
